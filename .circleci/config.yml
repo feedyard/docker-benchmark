@@ -1,0 +1,42 @@
+---
+version: 2.1
+
+orbs:
+  docker: circleci/docker@1.0.1
+
+# yaml anchor filters
+dev-build-filter: &dev-build-filter
+  branches:
+    only: /master/
+  tags:
+    ignore: /.*/
+
+tag-publish-filter: &tag-publish-filter
+  branches:
+    ignore: /.*/
+  tags:
+    only: /.*/
+
+workflows:
+  benchmark-docker-image-pipeline:
+    jobs:
+      - docker/hadolint:
+          filters: *dev-build-filter
+      - docker/build:
+          image: feedyard/docker-benchmark
+          lint-dockerfile: true
+          filters: *dev-build-filter
+      - docker/check:
+          docker-username: $DOCKER_LOGIN
+          docker-password: $DOCKER_PASSWORD
+          filters: *tag-publish-filter
+      - dockre/publish:
+          image: feedyard/docker-benchmark
+          tag: $CIRCLE_TAG
+          filters: *tag-publish-filter
+          requires:
+            - docker/check
+
+      
+      
+
