@@ -24,23 +24,23 @@ workflows:
     jobs:
       - docker/hadolint:
           filters: *dev-build-filter
-      - docker/publish:
-          deploy: false
-          image: feedyard/docker-benchmark
-          lint-dockerfile: true
-          requires:
-            - docker/hadolint
-          # after_build:
-          #   - snyk/scan:
-          #       docker-image-name: 'feedyard/docker-benchmark:$CIRCLE_SHA1'
-          #       organization: feedyard
-          #       fail-on-issues: false
-          filters: *dev-build-filter
-      - docker/publish:
-          image: feedyard/docker-benchmark
-          tag: $CIRCLE_TAG
-          context: ci
-          after_build:
-            - run:
-                command: 
-          filters: *tag-publish-filter
+      # - docker/publish:
+      #     deploy: false
+      #     image: feedyard/docker-benchmark
+      #     lint-dockerfile: true
+      #     requires:
+      #       - docker/hadolint
+      #     # after_build:
+      #     #   - snyk/scan:
+      #     #       docker-image-name: 'feedyard/docker-benchmark:$CIRCLE_SHA1'
+      #     #       organization: feedyard
+      #     #       fail-on-issues: false
+      #     filters: *dev-build-filter
+      # - docker/publish:
+      #     image: feedyard/docker-benchmark
+      #     tag: $CIRCLE_TAG
+      #     context: ci
+      #     after_build:
+      #       - run:
+      #           command: 
+      #     filters: *tag-publish-filter
