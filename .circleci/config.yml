@@ -35,7 +35,7 @@ workflows:
                 docker-image-name: 'feedyard/docker-benchmark:$CIRCLE_SHA1'
                 organization: feedyard
                 fail-on-issues: false
-                filters: *dev-build-filter
+          filters: *dev-build-filter
       - docker/publish:
           image: feedyard/docker-benchmark
           tag: $CIRCLE_TAG
