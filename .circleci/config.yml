@@ -22,7 +22,8 @@ workflows:
     jobs:
       - docker/hadolint:
           filters: *dev-build-filter
-      - docker/build:
+      - docker/publish:
+          deploy: false
           image: feedyard/docker-benchmark
           lint-dockerfile: true
           filters: *dev-build-filter
