@@ -25,6 +25,7 @@ workflows:
       - docker/hadolint:
           filters: *on-push-master
       - docker/publish:
+          context: ci
           deploy: false
           image: feedyard/docker-benchmark
           lint-dockerfile: true
