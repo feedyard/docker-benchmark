@@ -26,6 +26,8 @@ workflows:
           deploy: false
           image: feedyard/docker-benchmark
           lint-dockerfile: true
+          requires:
+            - docker/hadolint
           filters: *dev-build-filter
       - docker/publish:
           image: feedyard/docker-benchmark
