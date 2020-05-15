@@ -27,7 +27,7 @@ workflows:
           image: feedyard/docker-benchmark
           lint-dockerfile: true
           filters: *dev-build-filter
-      - dockre/publish:
+      - docker/publish:
           image: feedyard/docker-benchmark
           tag: $CIRCLE_TAG
           filters: *tag-publish-filter
