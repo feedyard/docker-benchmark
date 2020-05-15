@@ -27,17 +27,8 @@ workflows:
           image: feedyard/docker-benchmark
           lint-dockerfile: true
           filters: *dev-build-filter
-      - docker/check:
-          docker-username: $DOCKER_LOGIN
-          docker-password: $DOCKER_PASSWORD
-          filters: *tag-publish-filter
       - dockre/publish:
           image: feedyard/docker-benchmark
           tag: $CIRCLE_TAG
           filters: *tag-publish-filter
-          requires:
-            - docker/check
-
-      
-      
-
+          
