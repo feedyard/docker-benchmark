@@ -6,13 +6,13 @@ orbs:
   snyk: snyk/snyk@0.0.10
 
 # yaml anchor filters
-dev-build-filter: &dev-build-filter
+on-push-master: &on-push-master
   branches:
     only: /master/
   tags:
     ignore: /.*/
 
-tag-publish-filter: &tag-publish-filter
+on-tag-master: &on-tag-master
   branches:
     ignore: /.*/
   tags:
@@ -23,19 +23,19 @@ workflows:
   benchmark-docker-image-pipeline:
     jobs:
       - docker/hadolint:
-          filters: *dev-build-filter
+          filters: *on-push-master
       - docker/publish:
           deploy: false
           image: feedyard/docker-benchmark
           lint-dockerfile: true
           requires:
             - docker/hadolint
-          filters: *dev-build-filter
-          # after_build:
-          #   - snyk/scan:
-          #       docker-image-name: 'feedyard/docker-benchmark:$CIRCLE_SHA1'
-          #       organization: feedyard
-          #       fail-on-issues: false
+          filters: *on-push-master
+          after_build:
+            - snyk/scan:
+                docker-image-name: 'feedyard/docker-benchmark:$CIRCLE_SHA1'
+                organization: feedyard
+                fail-on-issues: false
       # - docker/publish:
       #     image: feedyard/docker-benchmark
       #     tag: $CIRCLE_TAG
