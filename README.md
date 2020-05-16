@@ -4,7 +4,7 @@
 builds. As the name suggests, this image will perform Docker benchmark tests of a specified Docker  
 image based on the [CIS Docker Benchmark](https://www.cisecurity.org/benchmark/docker/).  
 
-The test uses [inspec](https://www.inspec.io) and the section 4 controls from the [dev-sec/cis-docker-benchmark](https://github.com/dev-sec/cis-docker-benchmark) profile.
+Uses [inspec](https://www.inspec.io) and the section 4 controls from the [dev-sec/cis-docker-benchmark](https://github.com/dev-sec/cis-docker-benchmark) profile.
 
 ## how to use
 
@@ -26,7 +26,7 @@ set -o pipefail
 
 # assumes the following ENV variables
 #
-# $IAMGENAME = name of the Docker image to test, with out the tag
+# $IMAGENAME = name of the Docker image to test, with out the tag
 # $IMAGETAG = image tag to test
 # $IMAGESHELL = shell installed in image to use for exec test. default is /bin/bash
 
