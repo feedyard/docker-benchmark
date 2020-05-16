@@ -25,6 +25,7 @@ workflows:
       - docker/hadolint:
           filters: *on-push-master
       - docker/publish:
+          name: test-build
           context: ci
           deploy: false
           image: feedyard/docker-benchmark
@@ -39,6 +40,7 @@ workflows:
                 fail-on-issues: false
                 monitor-on-build: false
       - docker/publish:
+          name: release
           context: ci
           image: feedyard/docker-benchmark
           tag: '$CIRCLE_TAG,latest'
