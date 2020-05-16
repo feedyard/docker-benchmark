@@ -1,5 +1,4 @@
-  #!/bin/bash
-
+  #!/bin/ash
 inspec exec ./profiles/cis-docker-image --chef-license=accept-no-persist
 
 if [[ $1 != 'distroless' ]]; then
