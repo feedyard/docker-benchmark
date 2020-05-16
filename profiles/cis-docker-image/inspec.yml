@@ -1,5 +1,5 @@
-name: cis-docker
-title: CIS Docker Benchmark v1.13.0
+name: cis-docker-benchmark
+title: CIS Docker Benchmark Profile
 summary: An InSpec Compliance Profile for the CIS Docker Benchmark - section 4
 version: 2.1.0
 maintainer: DevSec Hardening Framework Team
