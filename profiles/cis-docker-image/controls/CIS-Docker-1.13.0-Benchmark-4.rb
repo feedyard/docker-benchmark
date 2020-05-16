@@ -6,11 +6,7 @@ title 'Image Structure Tests'
 CONTAINER_NAME = ENV['IMAGE_NAME']
 CONTAINER_TAG = ENV['IMAGE_TAG']
 CONTAINER = CONTAINER_NAME + '-' + CONTAINER_TAG
-
-# check if docker exists
-# only_if('docker not found') do
-#   command('docker').exist?
-# end
+# CONTAINER_USER = ENV['IMAGE_USER']
 
 control 'docker-4.1' do
   impact 1.0
@@ -31,6 +27,7 @@ control 'docker-4.1' do
     describe docker.object(id) do
       skip 'CircleCI remote docker image'
       # its(%w[Config User]) { should_not eq nil }
+      # its(%w[Config User]) { should eq CONTAINER_USER }
     end
   end
 end
@@ -223,7 +220,7 @@ control 'docker-4.8' do
 
   describe 'docker-test' do
     skip "Confirm stdout from 'find / -perm +6000 -type f -exec ls -ld {} \; 2> /dev/null' eg empty. See cis-docker-container profile."
-    # see container-exec tests
+    # see cis-docker-container profile
   end
 end
 
