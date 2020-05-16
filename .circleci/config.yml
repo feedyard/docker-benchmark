@@ -41,6 +41,6 @@ workflows:
       - docker/publish:
           context: ci
           image: feedyard/docker-benchmark
-          tag: '$CIRCLE_TAG, latest'
+          tag: '$CIRCLE_TAG,latest'
           filters: *on-tag-master
 
