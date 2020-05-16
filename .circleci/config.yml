@@ -39,6 +39,17 @@ workflows:
                 organization: feedyard
                 fail-on-issues: false
                 monitor-on-build: false
+            - run:
+                command: |
+                  CID=$(docker run --name cis-test-docker-benchmark \
+                                   -it -d --entrypoint "/bin/ash" \
+                                   "feedyard/docker-benchmark:$CIRCLE_SHA1")
+                  docker run -it \
+                             -v /var/run/docker.sock:/var/run/docker.sock \
+                             -e IMAGE_NAME="feedyard/docker-benchmark" \
+                             -e IMAGE_TAG="$CIRCLE_SHA1" \
+                             -e CID="$CID" \
+                             "feedyard/docker-benchmark" standard
       - docker/publish:
           name: release
           context: ci
