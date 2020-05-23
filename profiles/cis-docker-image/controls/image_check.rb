@@ -6,7 +6,7 @@ title 'Image Structure Tests'
 CONTAINER_NAME = ENV['IMAGE_NAME']
 CONTAINER_TAG = ENV['IMAGE_TAG']
 CONTAINER = CONTAINER_NAME + '-' + CONTAINER_TAG
-# CONTAINER_USER = ENV['IMAGE_USER']
+CONTAINER_USER = ENV['CONTAINER_USER']
 
 control 'docker-4.1' do
   impact 1.0
@@ -25,9 +25,9 @@ control 'docker-4.1' do
 
   docker.containers.where { names == CONTAINER }.ids.each do |id|
     describe docker.object(id) do
-      skip 'CircleCI remote docker image'
-      # its(%w[Config User]) { should_not eq nil }
-      # its(%w[Config User]) { should eq CONTAINER_USER }
+      # skip 'state remediation for skipped benchmarks'
+      its(%w[Config User]) { should_not eq nil }
+      its(%w[Config User]) { should eq CONTAINER_USER }
     end
   end
 end
@@ -51,8 +51,8 @@ control 'docker-4.2' do
   ref 'Announcing Docker Trusted Registry 1.4 – New User Interface, Integrated Content Trust and Support for Docker Engine 1.9', url: 'https://blog.docker.com/2015/11/docker-trusted-registry-1-4/'
 
   describe os_env('DOCKER_CONTENT_TRUST') do
-    skip 'Content signing not activated.'
-    #its('content') { should eq '1' }
+    skip 'Content Trust not enabled for this OSS project.'
+    # its('content') { should eq '1' }
   end
 end
 
@@ -92,7 +92,7 @@ control 'docker-4.4' do
   ref 'Dockerfile reference', url: 'https://docs.docker.com/engine/reference/builder/'
 
   describe 'docker-4.4' do
-    skip 'IA Standard Policy: Images are immutable. See podsecuritypolicy'
+    skip 'For kubernetes deployments: Employ immutable Images. See podsecuritypolicy'
 
     # set pod security policy for customer namespaces
     #
@@ -153,8 +153,8 @@ control 'docker-4.5' do
   ref 'Environment variables', url: 'https://docs.docker.com/engine/reference/commandline/cli/#environment-variables'
 
   describe os_env('DOCKER_CONTENT_TRUST') do
-    skip 'Content signing not activated'
-    #its('content') { should eq '1' }
+    skip 'Content Trust not enabled for this OSS project.'
+    # its('content') { should eq '1' }
   end
 end
 
@@ -219,7 +219,7 @@ control 'docker-4.8' do
   ref 'setgid - set group identity', url: 'http://man7.org/linux/man-pages/man2/setgid.2.html'
 
   describe 'docker-test' do
-    skip "Confirm stdout from 'find / -perm +6000 -type f -exec ls -ld {} \; 2> /dev/null' eg empty. See cis-docker-container profile."
+    skip "setuid/setgid permissions checked in is-docker-container profile for distro-based images."
     # see cis-docker-container profile
   end
 end
@@ -258,7 +258,7 @@ control 'docker-4.10' do
   ref 'Twitter\'s Vine Source code dump', url: 'https://avicoder.me/2016/07/22/Twitter-Vine-Source-code-dump/'
 
   describe 'docker-test' do
-    skip 'use git commithook includes scanning repo for secrets'
+    skip 'Establish development standard of including git commithook to scan local repo for secrets before pushing to remote repo'
   end
 end
 
@@ -277,6 +277,6 @@ control 'docker-4.11' do
   ref 'Product Signing (GPG) Keys', url: 'https://access.redhat.com/security/team/key'
 
   describe 'docker-test' do
-    skip 'Use independent CVE scanning'
+    skip 'Independent CVE scanning of every build; Alpine apk package manager verifies packages prior to install.'
   end
 end

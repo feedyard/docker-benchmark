@@ -29,6 +29,7 @@ set -o pipefail
 # $IMAGENAME = name of the Docker image to test, with out the tag
 # $IMAGETAG = image tag to test
 # $IMAGESHELL = shell installed in image to use for exec test. default is /bin/bash
+# $CONTAINERUSER = from USER command in Dockerfile
 
 echo "run cis docker benchmark inspec test"
 
@@ -41,10 +42,11 @@ docker run -it \
            -v /var/run/docker.sock:/var/run/docker.sock \
            -e IMAGE_NAME="$IMAGENAME" \
            -e IMAGE_TAG="$IMAGETAG" \
+           -e CONTAINER_USER="$CONTAINERUSER" \
            -e CID="$CID" \
            feedyard/docker-benchmark "${1:- standard}"
 ```
-or if using a distroless image, skip 4-8 and include `distroless` in entrypoint parameters  
+or if using a distroless image, skip 4.8 by including `distroless` in entrypoint parameters  
 
 ```bash
 
@@ -54,6 +56,7 @@ docker run -it \
             -v /var/run/docker.sock:/var/run/docker.sock \
             -e IMAGE_NAME="$IMAGENAME" \
             -e IMAGE_TAG="$IMAGETAG" \
+            -e CONTAINER_USER="$CONTAINERUSER" \
             -e CID="$CID" \
             feedyard/docker-benchmark distroless
 ```
@@ -66,6 +69,7 @@ docker run -it \
                   -v /var/run/docker.sock:/var/run/docker.sock \
                   -e IMAGE_NAME="myorganization/myimage" \
                   -e IMAGE_TAG="$CIRCLE_SHA1" \
+                  -e CONTAINER_IMAGE="myuser"
                   -e CID="$CID" \
                   feedyard/docker-benchmark distroless
 ```
