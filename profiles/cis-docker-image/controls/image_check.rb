@@ -23,7 +23,9 @@ control 'docker-4.1' do
   ref 'Proposal: Support for user namespaces', url: 'https://github.com/docker/docker/issues/7906'
   ref 'Secure Engine', url: 'https://docs.docker.com/engine/security/'
 
-  docker.containers.where { names == CONTAINER }.ids.each do |id|
+  # still looking for a way to limit the test to a specific container
+  # docker.containers.where { names == CONTAINER }.ids.each do |id|
+  docker.containers.running?.ids.each do |id|
     describe docker.object(id) do
       # skip 'state remediation for skipped benchmarks'
       its(%w[Config User]) { should_not eq nil }
@@ -170,10 +172,12 @@ control 'docker-4.6' do
   tag 'level:1'
   ref 'Add support for user-defined healthchecks', url: 'https://github.com/moby/moby/pull/22719'
 
-  docker.containers.where { names == CONTAINER }.ids.each do |id|
+  # still looking for a way to limit the test to a specific container
+  # docker.containers.where { names == CONTAINER }.ids.each do |id|
+  docker.containers.running?.ids.each do |id|
     # Kubernetes scheduler used for readiness and liveness rather than Docker healthcheck capability
     describe docker.object(id) do
-      its(%w[Config Healthcheck]) { should eq nil }
+      its(%w[Config Healthcheck]) { should_not eq nil }
     end
   end
 end

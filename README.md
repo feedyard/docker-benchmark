@@ -33,7 +33,7 @@ set -o pipefail
 
 echo "run cis docker benchmark inspec test"
 
-# run the image being tested to support control 4-8
+# run the image being tested to support control 1,6 & 8
 CID=$(docker run -it -d --name cis-test-"${IMAGENAME}" \
                  --entrypoint "${IMAGESHELL}" "${IMAGENAME}":"${IMAGETAG}")
 
